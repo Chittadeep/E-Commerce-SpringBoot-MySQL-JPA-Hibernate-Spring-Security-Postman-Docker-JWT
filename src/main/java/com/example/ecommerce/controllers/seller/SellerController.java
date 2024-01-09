@@ -1,17 +1,21 @@
 package com.example.ecommerce.controllers.seller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 import com.example.ecommerce.entities.seller.Seller;
 import com.example.ecommerce.models.seller.SellerRequest;
 import com.example.ecommerce.services.seller.SellerService;
-
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,5 +67,19 @@ public class SellerController {
     public ResponseEntity<List<Seller>> getAllValidSellers() {
         return new ResponseEntity<List<Seller>>(sellerService.getAllValidSellers(), HttpStatus.OK);
     }
+
+    @PatchMapping("/seller/updateProfilePicture/{sellerId}")
+    public ResponseEntity<Boolean> updateProfilePicture(@PathVariable int sellerId, @RequestParam MultipartFile file)
+    {
+        return new ResponseEntity<Boolean>(sellerService.updateProfilePicture(sellerId, file), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/seller/getProfilePicture/{sellerId}")
+    public ResponseEntity<InputStreamResource> getProfilePricture(@PathVariable int sellerId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename = sellerProfilePic.jpg");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.IMAGE_JPEG).body(sellerService.getProfilePicture(sellerId));
+    }
+    
     
 }

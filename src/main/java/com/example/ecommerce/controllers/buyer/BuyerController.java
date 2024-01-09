@@ -3,14 +3,19 @@ package com.example.ecommerce.controllers.buyer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.models.buyer.BuyerRequest;
 import com.example.ecommerce.services.buyer.BuyerService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -62,6 +67,19 @@ public class BuyerController {
     @GetMapping("/getAllValidBuyers")
     public ResponseEntity<List<Buyer>> getAllValidBuyers() {
         return new ResponseEntity<List<Buyer>>(buyerService.getAllValidBuyers(), HttpStatus.OK);
+    }
+    
+    @PatchMapping("/buyer/updateProfilePicture/{buyerId}")
+    public ResponseEntity<Boolean> updateProfilePicture(@PathVariable int buyerId, @RequestParam MultipartFile file)
+    {
+        return new ResponseEntity<Boolean>(buyerService.updateProfilePicture(buyerId, file), HttpStatus.OK);
+    }
+
+    @GetMapping("/buyer/getProfilePicture/{buyerId}")
+    public ResponseEntity<InputStreamResource> getProfilePicture(@PathVariable int buyerId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename= buyerProfilePic.jpg");
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.IMAGE_JPEG).body(buyerService.getProfilePicture(buyerId));
     }
     
 }
