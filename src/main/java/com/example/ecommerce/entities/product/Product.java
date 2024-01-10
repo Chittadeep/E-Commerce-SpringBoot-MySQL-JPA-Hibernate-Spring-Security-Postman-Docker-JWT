@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.example.ecommerce.entities.seller.Seller;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,5 +39,7 @@ public class Product {
     @OneToMany
     @JoinColumn(name = "productId", referencedColumnName = "id")
     private List<ProductImage> images;
-  
+    
+    @ManyToOne
+    private Seller seller;
 }

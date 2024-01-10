@@ -14,8 +14,8 @@ public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotNull
+    @NotNull(message = "product image cannot be inserted without product Id")
     private int productId;
-    @NotBlank
+    @NotBlank(message = "product image cannot be inserted without image")
     private byte[] image;
 }

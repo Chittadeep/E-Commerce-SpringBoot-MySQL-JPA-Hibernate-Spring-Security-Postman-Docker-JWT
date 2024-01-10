@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,14 +22,18 @@ public class Category {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     @NotNull(message = "Category cannot be created without name")
+    @Column(unique = true)
     private String name;
     @ColumnDefault(value = "true")
     private boolean available;
     @Lob
     @Column(length =50000000)
     private byte[] image;
-
-    @ManyToMany(mappedBy = "category")
-    private List<Product> product;
     
+    @NotNull(message = "Category cannot be created qwithout seller id")
+    private int sellerId;
+
+    @ManyToMany(mappedBy = "category", cascade=CascadeType.ALL)
+    private List<Product> products;
+
 }

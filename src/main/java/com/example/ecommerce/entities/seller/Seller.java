@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.example.ecommerce.entities.product.Category;
+import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.models.seller.SellerRequest;
 
 import jakarta.persistence.CascadeType;
@@ -44,6 +46,13 @@ public class Seller {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "sellerId", referencedColumnName = "id")
     private List<SellerAddress> sellerAddresses; 
+
+    @OneToMany(mappedBy = "seller")
+    private List<Product> products;
+    
+    @OneToMany
+    @JoinColumn(name="sellerId", referencedColumnName = "id")
+    private List<Category> category;
 
     public Seller(SellerRequest sellerRequest)
     {
