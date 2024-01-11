@@ -18,4 +18,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     @Query("Select p from Product as p where p.available=true")
     public List<Product> getAvailableProducts();
 
+    public List<Product> getProductBySeller_Id(int sellerId);
+
 }

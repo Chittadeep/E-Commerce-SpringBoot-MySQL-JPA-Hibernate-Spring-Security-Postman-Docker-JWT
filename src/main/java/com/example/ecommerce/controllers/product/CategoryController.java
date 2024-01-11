@@ -46,13 +46,13 @@ public class CategoryController {
 
     @PostMapping("/createCategory")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        return new ResponseEntity<Category>(categoryService.createCategory(category), HttpStatus.OK);
+        return new ResponseEntity<Category>(categoryService.createCategory(category), HttpStatus.CREATED);
     }
 
     @PutMapping("/updateCategory")
     public ResponseEntity<Category> updateCategory(@RequestBody Category category)
     {
-        return new ResponseEntity<Category>(categoryService.updateCategory(category), HttpStatus.OK);
+        return new ResponseEntity<Category>(categoryService.updateCategory(category), HttpStatus.ACCEPTED);
     }
     
 }

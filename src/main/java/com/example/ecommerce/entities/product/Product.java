@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.example.ecommerce.entities.seller.Seller;
+import com.example.ecommerce.entities.seller.SellerAddress;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,12 +27,13 @@ public class Product {
     private int id;
     @NotNull(message = "Product cannot be created without product name")
     private String name;
-    @NotBlank(message = "Product cannot be created without price")
+    @NotNull(message = "Product cannot be created without price")
     private double price;
-    @NotBlank(message = "Product cannot be created without quantity")
+    @NotNull(message = "Product cannot be created without quantity")
     private int quantity;
     @ColumnDefault(value = "true")
     private boolean available;
+
 
     @ManyToMany
     private List<Category> category;
@@ -40,6 +42,11 @@ public class Product {
     @JoinColumn(name = "productId", referencedColumnName = "id")
     private List<ProductImage> images;
     
+    @NotNull(message = "Product cannot be created without seller")
     @ManyToOne
     private Seller seller;
+
+    @NotNull(message = "Product cannot be created without seller address")
+    @ManyToOne
+    private SellerAddress sellerAddress;
 }
