@@ -1,8 +1,12 @@
-package com.example.ecommerce.services.category;
+package com.example.ecommerce.services.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.*;
 
 import com.example.ecommerce.entities.product.Category;
@@ -43,5 +47,30 @@ public class CategoryService {
     public List<Category> getAvailableCategories()
     {
         return categoryRepository.getAvailableCategories();
+    }
+
+    public boolean updateImage(int categoryId ,MultipartFile file)
+    {
+        Category category = getCategoryById(categoryId);
+        try{
+        category.setImage(file.getBytes());
+        categoryRepository.save(category);
+        return true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public InputStreamResource getImage(int categoryId)
+    {
+        Category category = getCategoryById(categoryId);
+        byte[] bytes = category.getImage();
+        if(bytes==null) throw new RuntimeException("The image you requested does not exist");
+        InputStream inputStream = new ByteArrayInputStream(bytes);
+        InputStreamResource resource = new InputStreamResource(inputStream);
+        return resource;
     }
 }

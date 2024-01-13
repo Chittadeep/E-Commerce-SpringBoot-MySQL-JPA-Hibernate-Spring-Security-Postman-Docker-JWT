@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 public class ProductResponse {
+    private int id;
     private String name;
     private double price;
     private int quantity;
@@ -17,6 +18,7 @@ public class ProductResponse {
 
     public ProductResponse(Product product)
     {
+        this.id = product.getId();
         this.name = product.getName();
         this.price = product.getPrice();
         this.quantity = product.getQuantity();

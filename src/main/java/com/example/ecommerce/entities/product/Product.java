@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.seller.Seller;
 import com.example.ecommerce.entities.seller.SellerAddress;
 
@@ -34,7 +35,7 @@ public class Product {
     @ColumnDefault(value = "true")
     private boolean available;
 
-
+    @NotNull(message = "Product cannot be created without product category")
     @ManyToMany
     private List<Category> category;
 
@@ -49,4 +50,7 @@ public class Product {
     @NotNull(message = "Product cannot be created without seller address")
     @ManyToOne
     private SellerAddress sellerAddress;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems;
 }

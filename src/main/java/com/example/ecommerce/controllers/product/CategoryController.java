@@ -1,18 +1,26 @@
 package com.example.ecommerce.controllers.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.service.annotation.PatchExchange;
+import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 import com.example.ecommerce.entities.product.Category;
-import com.example.ecommerce.services.category.CategoryService;
+import com.example.ecommerce.services.product.CategoryService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -53,6 +61,19 @@ public class CategoryController {
     public ResponseEntity<Category> updateCategory(@RequestBody Category category)
     {
         return new ResponseEntity<Category>(categoryService.updateCategory(category), HttpStatus.ACCEPTED);
+    }
+
+    @PatchMapping("/category/updateImage/{categoryId}")
+    public ResponseEntity<Boolean> updateImage(@PathVariable int categoryId, @RequestParam MultipartFile file)
+    {
+        return new ResponseEntity<Boolean>(categoryService.updateImage(categoryId, file), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/category/getImage/{categoryId}")
+    public ResponseEntity<InputStreamResource> getImage(@PathVariable int categoryId) {
+       HttpHeaders headers = new HttpHeaders();
+       headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=categoryPic.jpg");
+       return ResponseEntity.ok().headers(headers).contentType(MediaType.IMAGE_JPEG).body(categoryService.getImage(categoryId));
     }
     
 }

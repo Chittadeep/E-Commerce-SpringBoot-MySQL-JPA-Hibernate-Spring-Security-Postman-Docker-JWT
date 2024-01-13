@@ -81,5 +81,4 @@ public class SellerController {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.IMAGE_JPEG).body(sellerService.getProfilePicture(sellerId));
     }
     
-    
 }

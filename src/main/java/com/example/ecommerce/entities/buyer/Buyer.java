@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.example.ecommerce.entities.order.OrderCustom;
 import com.example.ecommerce.models.buyer.BuyerRequest;
 
 import jakarta.persistence.CascadeType;
@@ -15,7 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -41,7 +41,8 @@ public class Buyer {
     @ColumnDefault(value = "true")
     private boolean valid;
 
-
+    @OneToMany(mappedBy = "buyer")
+    private List<OrderCustom> orders;
     //foreign relations inverse side
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="buyerId", referencedColumnName = "id")
