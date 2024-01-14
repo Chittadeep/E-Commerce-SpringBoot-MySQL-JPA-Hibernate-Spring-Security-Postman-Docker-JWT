@@ -20,4 +20,5 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     public List<Product> getProductBySeller_Id(int sellerId);
 
+
 }

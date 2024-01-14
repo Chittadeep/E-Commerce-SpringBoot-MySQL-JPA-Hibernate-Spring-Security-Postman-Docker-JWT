@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.entities.enums.OrderState;
+import com.example.ecommerce.entities.product.ProductReview;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -39,4 +41,5 @@ public class OrderCustom {
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.example.ecommerce.entities.order.OrderCustom;
+import com.example.ecommerce.entities.product.ProductReview;
 import com.example.ecommerce.models.buyer.BuyerRequest;
 
 import jakarta.persistence.CascadeType;
@@ -47,6 +48,9 @@ public class Buyer {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="buyerId", referencedColumnName = "id")
     private List<BuyerAddress> buyerAddresses;
+
+    @OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL)
+    private List<ProductReview> reviews;
 
     public Buyer(BuyerRequest buyerRequest)
     {
