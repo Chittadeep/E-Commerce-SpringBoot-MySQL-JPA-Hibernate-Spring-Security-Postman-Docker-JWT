@@ -2,10 +2,17 @@ package com.example.ecommerce.entities.order;
 
 import java.util.List;
 
+import java.sql.Timestamp;
+
+
+import org.hibernate.annotations.CurrentTimestamp;
+
 import com.example.ecommerce.entities.buyer.Buyer;
+import com.example.ecommerce.entities.buyer.BuyerAddress;
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.product.ProductReview;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,10 +43,20 @@ public class OrderCustom {
     @NotNull(message = "Order cannot be created without saasFee")
     private double saasFee;
 
+    @CurrentTimestamp
+    private Timestamp orderInitiatedTimestamp; 
+    private Timestamp orderPlacedTimestamp;
+
     @ManyToOne
     private Buyer buyer;
 
+    @ManyToOne
+    private BuyerAddress buyerAddress;
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
+
+    @OneToOne(mappedBy = "orderCustom", cascade = CascadeType.ALL)
+    private OrderPayment orderPayment;
 
 }
