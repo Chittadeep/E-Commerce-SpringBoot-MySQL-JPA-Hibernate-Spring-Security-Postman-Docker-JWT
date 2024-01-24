@@ -45,6 +45,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+				<!-- https://mvnrepository.com/artifact/com.opencsv/opencsv -->
+	<dependency>
+		<groupId>com.opencsv</groupId>
+		<artifactId>opencsv</artifactId>
+		<version>3.8</version>
+	</dependency>
+
 	</dependencies>
 
 	<build>

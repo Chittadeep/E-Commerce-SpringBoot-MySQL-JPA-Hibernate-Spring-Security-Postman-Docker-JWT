@@ -1,0 +1,10 @@
+name,price,quantity,category_id,category_name,seller_id,seller_address
+TV,20000,8,1,Entertainment,1,1
+MOBILE,12000,18,1,Entertainment,2,2
+detergent,20,100,2,Stationery,3,4
+soap,10,100,2,Stationery,1,1
+shampoo,10,200,2,Stationery,2,2
+books,560,50,3,Education,3,4
+copies,70,100,3,Education,1,1
+shirt,240,30,4,Clothes,2,2
+pant,560,30,4,Clothes,3,4
