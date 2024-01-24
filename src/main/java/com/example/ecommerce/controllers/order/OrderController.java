@@ -28,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<OrderCustom> createOrderCustom(@PathVariable OrderCustom orderCustom) 
+    public ResponseEntity<OrderCustom> createOrderCustom(@RequestBody OrderCustom orderCustom) 
     {
         return new ResponseEntity<OrderCustom>(orderService.createOrderCustom(orderCustom), HttpStatus.CREATED);
     }
@@ -42,7 +42,7 @@ public class OrderController {
     @GetMapping("/getOrderCustomById/{orderCustomId}")
     public ResponseEntity<OrderCustom> getOrderCustomById(@PathVariable int orderCustomId)
     {
-        return new ResponseEntity<OrderCustom>(orderService.getOrderCustomById(orderCustomId), HttpStatus.OK);
+        return new ResponseEntity <OrderCustom>(orderService.getOrderCustomById(orderCustomId), HttpStatus.OK);
     }
     
     @GetMapping("/getOrderCustomByBuyerId/{buyerId}")

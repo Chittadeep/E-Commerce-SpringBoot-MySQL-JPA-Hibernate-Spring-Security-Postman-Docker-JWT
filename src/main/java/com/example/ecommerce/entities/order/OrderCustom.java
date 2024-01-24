@@ -32,27 +32,26 @@ public class OrderCustom {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     
-    @NotNull(message = "Order cannot be created without basePrice")
     private double basePrice;
-    @NotNull(message = "Order cannot be created without deliveryPrice")
     private double deliveryPrice;
-    @NotNull(message = "Order cannot be created without totalPrice")
     private double totalPrice;
     @Enumerated(EnumType.STRING)
     private OrderState orderState;
-    @NotNull(message = "Order cannot be created without saasFee")
     private double saasFee;
 
     @CurrentTimestamp
     private Timestamp orderInitiatedTimestamp; 
     private Timestamp orderPlacedTimestamp;
 
+    @NotNull(message = "Order cannot be created without Buyer")
     @ManyToOne
     private Buyer buyer;
 
+    @NotNull(message = "Order cannot be created without Buyer Address")
     @ManyToOne
     private BuyerAddress buyerAddress;
 
+    @NotNull(message = "Order cannot be created without order items")
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 

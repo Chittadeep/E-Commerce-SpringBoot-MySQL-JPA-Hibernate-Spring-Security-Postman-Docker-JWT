@@ -3,14 +3,11 @@ package com.example.ecommerce.services.order;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderCustom;
 import com.example.ecommerce.repositories.order.OrderRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController

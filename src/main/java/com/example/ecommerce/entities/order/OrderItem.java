@@ -20,12 +20,13 @@ public class OrderItem {
     private int id;
     @NotNull(message="order item cannot be created without quantity")
     private int quantity;
-    @NotNull(message = "order item cannot be created without price")
+
     private double price;
+
     @NotNull(message = "order item cannot be created without product")
-    
     @ManyToOne
     private Product product;
+    
     @ManyToOne
     private OrderCustom order;
     
