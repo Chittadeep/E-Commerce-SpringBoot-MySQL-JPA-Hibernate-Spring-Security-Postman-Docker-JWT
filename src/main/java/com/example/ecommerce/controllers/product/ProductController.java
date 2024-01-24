@@ -68,9 +68,9 @@ public class ProductController {
         return new ResponseEntity<List<ProductResponse>>(productService.getProductBySeller_Id(sellerId), HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @PostMapping("/createProductsFromCSV")
     public ResponseEntity<List<ProductResponse>> addProductsViaCSV(@RequestParam("file") MultipartFile file) throws IOException {
-        return new ResponseEntity<List<ProductResponse>>(productService.createMenusFromCSV(file), HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<ProductResponse>>(productService.createMenusFromCSV(file), HttpStatus.CREATED);
     }
     
     
