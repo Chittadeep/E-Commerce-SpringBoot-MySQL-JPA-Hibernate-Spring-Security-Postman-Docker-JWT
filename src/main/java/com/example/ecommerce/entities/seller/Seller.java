@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import com.example.ecommerce.entities.product.Category;
 import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.models.seller.SellerRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

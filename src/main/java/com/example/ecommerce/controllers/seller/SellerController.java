@@ -35,7 +35,9 @@ public class SellerController {
 
     @GetMapping("/getSellerById/{sellerId}")
     public ResponseEntity<Seller> getSellerById(@PathVariable int sellerId) {
-        return new ResponseEntity<Seller>(sellerService.getSellerById(sellerId), HttpStatus.OK);
+
+        ResponseEntity<Seller> responseEntity = new ResponseEntity<Seller>(sellerService.getSellerById(sellerId), HttpStatus.OK);
+        return responseEntity;
     }
 
     @GetMapping("/getSellerByName/{name}")

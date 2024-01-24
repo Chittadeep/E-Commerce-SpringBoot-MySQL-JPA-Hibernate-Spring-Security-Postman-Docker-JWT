@@ -6,15 +6,19 @@ import java.util.List;
 import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.models.product.ProductResponse;
 import com.example.ecommerce.repositories.product.ProductRepository;
+import com.example.ecommerce.repositories.seller.SellerAddressRepository;
 
 @Service
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private SellerAddressRepository sellerAddressRepository;
 
 
     public ProductResponse createProduct(Product product)
     {
+        if(sellerAddressRepository.findById(product.getSellerAddress().getId()).get().getSellerId()!=product.getSeller().getId()) throw new RuntimeException("Product cannot be created because the seller address does not belong to the seller");
         productRepository.save(product);
         return new ProductResponse(product);
     }
@@ -54,4 +58,5 @@ public class ProductService {
     {
         return productRepository.getProductBySeller_Id(sellerId).stream().map(ProductResponse::new).toList();
     }
+
 }
