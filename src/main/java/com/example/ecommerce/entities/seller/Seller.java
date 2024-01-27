@@ -57,6 +57,11 @@ public class Seller {
     @JoinColumn(name="sellerId", referencedColumnName = "id")
     private List<Category> category;
 
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "sellerId", referencedColumnName = "id")
+    private List<SellerPayment> sellerPayments;
+    
     public Seller(SellerRequest sellerRequest)
     {
         this.mail=sellerRequest.getMail();

@@ -2,6 +2,7 @@ package com.example.ecommerce.entities.order;
 
 import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.entities.product.ProductReview;
+import com.example.ecommerce.entities.seller.SellerPayment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -34,6 +35,9 @@ public class OrderItem {
     @JsonIgnore
     @ManyToOne
     private OrderCustom order;
+
+    @OneToOne(mappedBy = "orderItem")
+    private SellerPayment sellerPayment;
     
     @OneToOne(mappedBy="orderItem")
     private ProductReview productReview; 

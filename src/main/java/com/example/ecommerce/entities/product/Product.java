@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.seller.Seller;
 import com.example.ecommerce.entities.seller.SellerAddress;
+import com.example.ecommerce.entities.seller.SellerPayment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -56,6 +57,9 @@ public class Product {
     @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product")
+    private List<SellerPayment> sellerPayments;
 
     @OneToMany(mappedBy = "product")
     private List<ProductReview> productReviews;

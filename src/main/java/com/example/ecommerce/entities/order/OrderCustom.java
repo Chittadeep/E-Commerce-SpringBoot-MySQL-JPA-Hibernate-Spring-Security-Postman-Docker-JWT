@@ -11,6 +11,7 @@ import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.entities.buyer.BuyerAddress;
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.product.ProductReview;
+import com.example.ecommerce.entities.seller.SellerPayment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -20,6 +21,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -59,4 +61,7 @@ public class OrderCustom {
     @OneToOne(mappedBy = "orderCustom", cascade = CascadeType.ALL)
     private OrderPayment orderPayment;
 
+    @OneToMany
+    @JoinColumn(name = "orderId", referencedColumnName = "id")
+    private List<SellerPayment> sellerPayment;
 }

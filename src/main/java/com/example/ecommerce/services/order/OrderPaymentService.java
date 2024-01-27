@@ -7,13 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.entities.enums.ModeOfPayment;
+import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.order.OrderPayment;
+import com.example.ecommerce.entities.seller.SellerPayment;
 import com.example.ecommerce.repositories.order.OrderPaymentRepository;
+import com.example.ecommerce.repositories.seller.SellerPaymentRepository;
 
 @Service
 public class OrderPaymentService {
     @Autowired
     private OrderPaymentRepository orderPaymentRepository;
+    @Autowired
+    private SellerPaymentRepository sellerPaymentRepository;
 
     public OrderPayment getOrderPaymentById(int orderPaymentId)
     {
@@ -31,6 +36,20 @@ public class OrderPaymentService {
         orderPayment.setModeOfPayment(modeOfPayment);
         orderPayment.setOrderPaymentCompleted(new Timestamp(System.currentTimeMillis()));
         orderPayment.setCompleted(true);
+        List<OrderItem> orderItems = orderPayment.getOrderCustom().getOrderItems();
+        orderItems.forEach(orderItem->{
+            SellerPayment sellerPayment = new SellerPayment();
+            sellerPayment.setBuyerId(orderItem.getOrder().getBuyer().getId());
+            sellerPayment.setOrderId(orderItem.getOrder().getId());
+            sellerPayment.setSellerId(orderItem.getProduct().getSeller().getId());
+            sellerPayment.setModeOfPayment(ModeOfPayment.INITIATED);
+            sellerPayment.setOrderItem(orderItem);
+            sellerPayment.setPrice(orderItem.getPrice());
+            sellerPayment.setProduct(orderItem.getProduct());
+            sellerPayment.setQuantity(orderItem.getQuantity());
+            sellerPayment.setTotalPrice(orderItem.getPrice()*orderItem.getQuantity());
+            sellerPaymentRepository.save(sellerPayment);
+        });
         return orderPaymentRepository.save(orderPayment);
     }
 
