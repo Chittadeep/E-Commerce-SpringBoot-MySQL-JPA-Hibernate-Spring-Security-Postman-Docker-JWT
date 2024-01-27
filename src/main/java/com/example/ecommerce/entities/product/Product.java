@@ -7,8 +7,10 @@ import org.hibernate.annotations.ColumnDefault;
 import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.seller.Seller;
 import com.example.ecommerce.entities.seller.SellerAddress;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,6 +36,7 @@ public class Product {
     @ColumnDefault(value = "true")
     private boolean available;
 
+    @JsonIgnore
     @NotNull(message = "Product cannot be created without product category")
     @ManyToMany
     private List<Category> category;
@@ -50,6 +53,7 @@ public class Product {
     @ManyToOne
     private SellerAddress sellerAddress;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 

@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import com.example.ecommerce.entities.enums.ModeOfPayment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -32,6 +33,7 @@ public class OrderPayment {
     private Timestamp orderPaymentInitiated;
     private Timestamp orderPaymentCompleted;
 
+    @JsonIgnore
     @OneToOne
     private OrderCustom orderCustom;
 

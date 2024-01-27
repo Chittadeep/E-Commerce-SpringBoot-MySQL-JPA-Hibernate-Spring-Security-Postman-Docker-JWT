@@ -48,9 +48,11 @@ public class Seller {
     @JoinColumn(name = "sellerId", referencedColumnName = "id")
     private List<SellerAddress> sellerAddresses; 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "seller")
     private List<Product> products;
     
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name="sellerId", referencedColumnName = "id")
     private List<Category> category;

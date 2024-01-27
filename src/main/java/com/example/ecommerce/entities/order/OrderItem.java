@@ -2,8 +2,10 @@ package com.example.ecommerce.entities.order;
 
 import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.entities.product.ProductReview;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,11 +24,14 @@ public class OrderItem {
     private int quantity;
 
     private double price;
+    private double totalPrice;
 
+    
     @NotNull(message = "order item cannot be created without product")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
     
+    @JsonIgnore
     @ManyToOne
     private OrderCustom order;
     

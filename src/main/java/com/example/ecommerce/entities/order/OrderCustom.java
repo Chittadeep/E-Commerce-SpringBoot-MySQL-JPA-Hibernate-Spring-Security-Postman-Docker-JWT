@@ -4,13 +4,14 @@ import java.util.List;
 
 import java.sql.Timestamp;
 
-
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.entities.buyer.BuyerAddress;
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.product.ProductReview;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -52,7 +53,7 @@ public class OrderCustom {
     private BuyerAddress buyerAddress;
 
     @NotNull(message = "Order cannot be created without order items")
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade=CascadeType.ALL)
     private List<OrderItem> orderItems;
 
     @OneToOne(mappedBy = "orderCustom", cascade = CascadeType.ALL)

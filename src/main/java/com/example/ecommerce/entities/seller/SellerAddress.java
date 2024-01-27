@@ -3,6 +3,7 @@ package com.example.ecommerce.entities.seller;
 import java.util.List;
 
 import com.example.ecommerce.entities.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,6 +34,7 @@ public class SellerAddress {
     @NotNull(message = "Seller address cannot be created without sellerID")
     private int sellerId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sellerAddress")
     private List<Product> products;
 }

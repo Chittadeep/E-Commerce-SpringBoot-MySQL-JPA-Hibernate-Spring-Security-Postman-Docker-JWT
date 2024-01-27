@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderCustom;
+import com.example.ecommerce.models.order.OrderResponse;
 import com.example.ecommerce.services.order.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,15 +23,15 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping("/allOrders")
-    public ResponseEntity<List<OrderCustom>> getOrderCustom() 
+    public ResponseEntity<List<OrderResponse>> getOrderCustom() 
     {
-        return new ResponseEntity<List<OrderCustom>>(orderService.getAllOrders(), HttpStatus.OK);
+        return new ResponseEntity<List<OrderResponse>>(orderService.getAllOrders(), HttpStatus.OK);
     }
 
     @PostMapping("/createOrder")
-    public ResponseEntity<OrderCustom> createOrderCustom(@RequestBody OrderCustom orderCustom) 
+    public ResponseEntity<OrderResponse> createOrderCustom(@RequestBody OrderCustom orderCustom) 
     {
-        return new ResponseEntity<OrderCustom>(orderService.createOrderCustom(orderCustom), HttpStatus.CREATED);
+        return new ResponseEntity<OrderResponse>(orderService.createOrderCustom(orderCustom), HttpStatus.CREATED);
     }
     
     @PutMapping("/updateOrder")
@@ -40,9 +41,9 @@ public class OrderController {
     }
 
     @GetMapping("/getOrderCustomById/{orderCustomId}")
-    public ResponseEntity<OrderCustom> getOrderCustomById(@PathVariable int orderCustomId)
+    public ResponseEntity<OrderResponse> getOrderCustomById(@PathVariable int orderCustomId)
     {
-        return new ResponseEntity <OrderCustom>(orderService.getOrderCustomById(orderCustomId), HttpStatus.OK);
+        return new ResponseEntity<OrderResponse>(orderService.getOrderCustomById(orderCustomId), HttpStatus.OK);
     }
     
     @GetMapping("/getOrderCustomByBuyerId/{buyerId}")
