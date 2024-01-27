@@ -3,6 +3,7 @@ package com.example.ecommerce.services.order;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.entities.enums.ModeOfPayment;
@@ -11,6 +12,7 @@ import com.example.ecommerce.repositories.order.OrderPaymentRepository;
 
 @Service
 public class OrderPaymentService {
+    @Autowired
     private OrderPaymentRepository orderPaymentRepository;
 
     public OrderPayment getOrderPaymentById(int orderPaymentId)

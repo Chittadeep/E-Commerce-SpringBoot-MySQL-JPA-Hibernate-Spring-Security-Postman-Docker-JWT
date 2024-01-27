@@ -22,6 +22,7 @@ import com.example.ecommerce.repositories.buyer.BuyerAddressRepository;
 import com.example.ecommerce.repositories.buyer.BuyerRepository;
 import com.example.ecommerce.repositories.order.OrderPaymentRepository;
 import com.example.ecommerce.repositories.order.OrderRepository;
+import com.example.ecommerce.repositories.product.ProductRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -37,10 +38,13 @@ public class OrderService {
     private EntityManager entityManager;
     private EntityManagerFactory entityManagerFactory;
     private OrderPaymentRepository orderPaymentRepository;
+    private ProductRepository productRepository;
 
     @Autowired
     public OrderService(OrderRepository orderRepository, EntityManagerFactory entityManagerFactory, 
-    EntityManager entityManager, BuyerRepository buyerRepository, BuyerAddressRepository buyerAddressRepository, OrderPaymentRepository orderPaymentRepository)
+    EntityManager entityManager, BuyerRepository buyerRepository, 
+    BuyerAddressRepository buyerAddressRepository, OrderPaymentRepository orderPaymentRepository,
+    ProductRepository productRepository)
     {
         this.orderRepository = orderRepository;
         this.buyerAddressRepository = buyerAddressRepository;
@@ -48,6 +52,7 @@ public class OrderService {
         this.entityManager=entityManager;
         this.entityManagerFactory=entityManagerFactory;
         this.orderPaymentRepository=orderPaymentRepository;
+        this.productRepository=productRepository;
     }
 
     public List<OrderResponse> getAllOrders() 
@@ -65,7 +70,7 @@ public class OrderService {
         System.out.println(buyer.getName());
         System.out.println(buyerAddress.getPincode());
         if(buyerAddress.getBuyerId()!=buyer.getId()) throw new RuntimeException("buyer does not have this address");
-        List<OrderItem> items = updatePrice(order.getOrderItems(), session);
+        List<OrderItem> items = updatePriceAndQuantity(order.getOrderItems(), session);
         items.stream().forEach((item)->{
             item.setOrder(order);
         });
@@ -90,13 +95,18 @@ public class OrderService {
         return new OrderResponse(order);
     }
 
-    private List<OrderItem> updatePrice(List<OrderItem> orderItems, Session session)
+    private List<OrderItem> updatePriceAndQuantity(List<OrderItem> orderItems, Session session)
     {
         orderItems.forEach((orderItem)->{
             if(orderItem.getProduct()==null) throw new RuntimeException("this product does not exist");
-            orderItem.setProduct(session.get(Product.class, orderItem.getProduct().getId()));
-            orderItem.setPrice(session.get(Product.class, orderItem.getProduct().getId()).getPrice());
-            orderItem.setTotalPrice(session.get(Product.class, orderItem.getProduct().getId()).getPrice()*orderItem.getQuantity());
+            Product product = session.get(Product.class, orderItem.getProduct().getId());
+            if(product.getQuantity()<orderItem.getQuantity()) throw new RuntimeException("product "+product.getName()+" does not exist in the quantity needed");
+            product.setQuantity(product.getQuantity()-orderItem.getQuantity());
+            productRepository.save(product);
+            orderItem.setProduct(product);
+            orderItem.setPrice(product.getPrice());
+            orderItem.setTotalPrice(product.getPrice()*orderItem.getQuantity());
+    
         });
         return orderItems;
     }

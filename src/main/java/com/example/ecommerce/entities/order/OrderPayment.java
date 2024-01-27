@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CurrentTimestamp;
 
+import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.entities.enums.ModeOfPayment;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -14,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
@@ -37,5 +39,6 @@ public class OrderPayment {
     @OneToOne
     private OrderCustom orderCustom;
 
-    
+    @ManyToOne
+    private Buyer buyer;
 }

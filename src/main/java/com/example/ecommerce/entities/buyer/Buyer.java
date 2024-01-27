@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.example.ecommerce.entities.order.OrderCustom;
+import com.example.ecommerce.entities.order.OrderPayment;
 import com.example.ecommerce.entities.product.ProductReview;
 import com.example.ecommerce.models.buyer.BuyerRequest;
 
@@ -51,6 +52,10 @@ public class Buyer {
 
     @OneToMany(mappedBy = "buyer",cascade = CascadeType.ALL)
     private List<ProductReview> reviews;
+
+
+    @OneToMany(mappedBy = "buyer")
+    private List<OrderPayment> orderPayments;
 
     public Buyer(BuyerRequest buyerRequest)
     {

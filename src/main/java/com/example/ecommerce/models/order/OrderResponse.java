@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderCustom;
-import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.order.OrderPayment;
 
 import lombok.Data;
