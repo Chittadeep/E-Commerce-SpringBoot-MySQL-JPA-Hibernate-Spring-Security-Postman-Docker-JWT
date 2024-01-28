@@ -10,13 +10,17 @@ import java.io.InputStream;
 import java.util.*;
 
 import com.example.ecommerce.entities.product.Category;
+import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.repositories.product.CategoryRepository;
+import com.example.ecommerce.repositories.product.ProductRepository;
 
 
 @Service
 public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     public List<Category> getAllCategories()
     {
@@ -72,5 +76,25 @@ public class CategoryService {
         InputStream inputStream = new ByteArrayInputStream(bytes);
         InputStreamResource resource = new InputStreamResource(inputStream);
         return resource;
+    }
+
+    public boolean validateUnvalidateCategory(int categoryId, boolean validation)
+    {
+        Category category = getCategoryById(categoryId);
+        category.setAvailable(validation);
+        categoryRepository.save(category);
+        return true;
+    }
+
+    public boolean validateUnvalidateCategoryAndAllProducts(int categoryId, boolean validation)
+    {
+        validateUnvalidateCategory(categoryId, validation);
+        List<Product> products = productRepository.getProductByCategoryId(categoryId);
+        products.forEach(product->{
+            product.setAvailable(validation);
+            productRepository.save(product);
+        }
+        );
+        return true;
     }
 }

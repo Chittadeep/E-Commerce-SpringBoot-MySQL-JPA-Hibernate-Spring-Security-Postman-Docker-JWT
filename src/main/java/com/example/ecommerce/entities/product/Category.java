@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +35,7 @@ public class Category {
     @NotNull(message = "Category cannot be created qwithout seller id")
     private int sellerId;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "category", cascade=CascadeType.ALL)
     private List<Product> products;
 

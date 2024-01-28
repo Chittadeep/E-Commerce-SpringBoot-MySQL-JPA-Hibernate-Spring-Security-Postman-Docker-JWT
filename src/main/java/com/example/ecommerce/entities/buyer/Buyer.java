@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.example.ecommerce.entities.order.OrderCustom;
+import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.order.OrderPayment;
 import com.example.ecommerce.entities.product.ProductReview;
 import com.example.ecommerce.models.buyer.BuyerRequest;
@@ -18,6 +19,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -56,6 +58,9 @@ public class Buyer {
 
     @OneToMany(mappedBy = "buyer")
     private List<OrderPayment> orderPayments;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<OrderItem> orderItems;
 
     public Buyer(BuyerRequest buyerRequest)
     {

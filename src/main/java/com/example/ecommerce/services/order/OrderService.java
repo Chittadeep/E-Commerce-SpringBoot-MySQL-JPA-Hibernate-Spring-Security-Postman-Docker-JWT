@@ -73,6 +73,7 @@ public class OrderService {
         List<OrderItem> items = updatePriceAndQuantity(order.getOrderItems(), session);
         items.stream().forEach((item)->{
             item.setOrder(order);
+            item.setBuyer(buyer);
         });
         order.setOrderItems(items);
         order.setOrderState(OrderState.INITIATED);
@@ -98,8 +99,10 @@ public class OrderService {
     private List<OrderItem> updatePriceAndQuantity(List<OrderItem> orderItems, Session session)
     {
         orderItems.forEach((orderItem)->{
-            if(orderItem.getProduct()==null) throw new RuntimeException("this product does not exist");
+            if(orderItem.getProduct()==null) throw new RuntimeException("No product has been passed to the order item");
             Product product = session.get(Product.class, orderItem.getProduct().getId());
+            if(product==null) throw new RuntimeException("product with this id "+ orderItem.getProduct().getId()+ " is not available");
+            if(!product.isAvailable()) throw new RuntimeException("product "+product.getName() + "id "+ product.getId()+" is not available");
             if(product.getQuantity()<orderItem.getQuantity()) throw new RuntimeException("product "+product.getName()+" does not exist in the quantity needed");
             product.setQuantity(product.getQuantity()-orderItem.getQuantity());
             productRepository.save(product);

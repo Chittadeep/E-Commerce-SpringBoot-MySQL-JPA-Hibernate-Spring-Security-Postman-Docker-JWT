@@ -1,5 +1,6 @@
 package com.example.ecommerce.entities.order;
 
+import com.example.ecommerce.entities.buyer.Buyer;
 import com.example.ecommerce.entities.product.Product;
 import com.example.ecommerce.entities.product.ProductReview;
 import com.example.ecommerce.entities.seller.SellerPayment;
@@ -11,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -35,6 +37,10 @@ public class OrderItem {
     @JsonIgnore
     @ManyToOne
     private OrderCustom order;
+
+    @JsonIgnore
+    @ManyToOne
+    private Buyer buyer;
 
     @OneToOne(mappedBy = "orderItem")
     private SellerPayment sellerPayment;

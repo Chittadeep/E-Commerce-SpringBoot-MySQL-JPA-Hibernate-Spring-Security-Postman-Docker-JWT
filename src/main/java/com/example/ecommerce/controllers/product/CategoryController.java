@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.service.annotation.PatchExchange;
 import org.springframework.http.HttpHeaders;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class CategoryController {
         return new ResponseEntity<List<Category>> (categoryService.getCategoryByName(name), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/getAvailableCategory")
+    @GetMapping(path = "/getAvailableCategories")
     public ResponseEntity<List<Category>> getAvailableCategories()
     {
         return  new ResponseEntity<List<Category>>(categoryService.getAvailableCategories(), HttpStatus.OK);
@@ -75,5 +74,28 @@ public class CategoryController {
        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=categoryPic.jpg");
        return ResponseEntity.ok().headers(headers).contentType(MediaType.IMAGE_JPEG).body(categoryService.getImage(categoryId));
     }
+
+    @PatchMapping("/validateCategory/{categoryId}")
+    public ResponseEntity<Boolean> validateCategory(@PathVariable int categoryId)
+    {
+        return new ResponseEntity<Boolean>(categoryService.validateUnvalidateCategory(categoryId, true), HttpStatus.OK);
+    }    
     
+    @PatchMapping("/unvalidateCategory/{categoryId}")
+    public ResponseEntity<Boolean> unvalidateCategory(@PathVariable int categoryId)
+    {
+        return new ResponseEntity<Boolean>(categoryService.validateUnvalidateCategory(categoryId, false), HttpStatus.OK);
+    }
+
+    @PatchMapping("/validateCategoryAndAllProducts/{categoryId}")
+    public ResponseEntity<Boolean> validateCategoryAndAllProducts(@PathVariable int categoryId)
+    {
+        return new ResponseEntity<Boolean>(categoryService.validateUnvalidateCategoryAndAllProducts(categoryId, true), HttpStatus.OK);
+    }
+
+    @PatchMapping("/unvalidateCategoryAndAllProducts/{categoryId}")
+    public ResponseEntity<Boolean> validateUnvalidateCategoryAndAllProducts(@PathVariable int categoryId)
+    {
+        return new ResponseEntity<Boolean>(categoryService.validateUnvalidateCategoryAndAllProducts(categoryId, false), HttpStatus.OK);
+    }
 }

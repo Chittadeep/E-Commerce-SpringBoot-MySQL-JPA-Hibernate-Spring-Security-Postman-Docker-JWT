@@ -1,16 +1,16 @@
 package com.example.ecommerce.services.product;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.io.File;
-import java.io.IOException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.UUID;
 
 import com.example.ecommerce.entities.product.Category;
 import com.example.ecommerce.entities.product.Product;
@@ -56,11 +56,15 @@ public class ProductService {
         return ((List<Product>) productRepository.findAll()).stream().map(ProductResponse::new).toList();
     }
 
-    public ProductResponse getProductById(int id)
+    public ProductResponse getProductResponseById(int id)
     {
-        return new ProductResponse(productRepository.findById(id).orElseThrow(()-> new RuntimeException("Any product with the given id does not exist")));
+        return new ProductResponse(getProductById(id));
     }
 
+    private Product getProductById(int id)
+    {
+        return productRepository.findById(id).orElseThrow(()-> new RuntimeException("Any product with the given id does not exist"));
+    }
     public List<ProductResponse> getProductByName(String name)
     {
         return productRepository.getProductByName(name).stream().map(ProductResponse::new).toList();
@@ -121,5 +125,23 @@ public class ProductService {
             productRepository.saveAll(products);
         }
         return products.stream().map(ProductResponse::new).toList();
+    }
+
+    public boolean validateUnvalidateProduct(int productId, boolean validation)
+    {
+        Product product =getProductById(productId);
+        product.setAvailable(validation);
+        productRepository.save(product);
+        return true;
+    }
+
+    public List<ProductResponse> getProductsByCategoryId(int categoryId)
+    {
+        return productRepository.getProductByCategoryId(categoryId).stream().map(ProductResponse::new).toList();
+    }
+
+    public List<ProductResponse> getAvailableProducts()
+    {
+        return productRepository.getAvailableProducts().stream().map(ProductResponse::new).toList();
     }
 }

@@ -27,12 +27,16 @@ public class ProductReview {
     @Min(0)
     private int stars;
 
+    @NotNull(message = "Product review cannot be given without buyer")
     @ManyToOne
     private Buyer buyer;
 
+    @NotNull(message = "Product review cannot be given without comments")
     @OneToOne
     private OrderItem orderItem;
 
+    @NotNull(message = "Producy review cannot be given without the product")
     @ManyToOne
     private Product product;
+
 }

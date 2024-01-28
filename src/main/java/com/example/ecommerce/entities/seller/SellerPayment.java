@@ -35,5 +35,5 @@ public class SellerPayment {
     private int quantity;
     private double price;
     private double totalPrice;
-
+    private boolean collected;
 }

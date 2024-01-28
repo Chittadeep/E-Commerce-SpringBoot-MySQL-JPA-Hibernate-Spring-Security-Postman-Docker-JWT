@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommerce.entities.enums.ModeOfPayment;
+import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.order.OrderPayment;
 import com.example.ecommerce.entities.seller.SellerPayment;
@@ -36,6 +37,8 @@ public class OrderPaymentService {
         orderPayment.setModeOfPayment(modeOfPayment);
         orderPayment.setOrderPaymentCompleted(new Timestamp(System.currentTimeMillis()));
         orderPayment.setCompleted(true);
+        orderPayment.getOrderCustom().setOrderState(OrderState.CONFIRMED);
+        orderPayment.getOrderCustom().setOrderPlacedTimestamp(new Timestamp(System.currentTimeMillis()));
         List<OrderItem> orderItems = orderPayment.getOrderCustom().getOrderItems();
         orderItems.forEach(orderItem->{
             SellerPayment sellerPayment = new SellerPayment();
@@ -68,6 +71,5 @@ public class OrderPaymentService {
     {
         return orderPaymentRepository.getOrderPaymentIncomplete();
     }
-    
     
 }

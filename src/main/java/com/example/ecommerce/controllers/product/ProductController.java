@@ -13,6 +13,7 @@ import com.example.ecommerce.services.product.ProductService;
 import java.io.IOException;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,7 +44,7 @@ public class ProductController {
 
     @GetMapping("/getProductById/{productId}")
     public ResponseEntity<ProductResponse> getProductById(@PathVariable int productId) {
-        return new ResponseEntity<ProductResponse>(productService.getProductById(productId), HttpStatus.OK);
+        return new ResponseEntity<ProductResponse>(productService.getProductResponseById(productId), HttpStatus.OK);
     }
 
     @GetMapping("/getProductByName/{productName}")
@@ -73,5 +74,27 @@ public class ProductController {
         return new ResponseEntity<List<ProductResponse>>(productService.createMenusFromCSV(file), HttpStatus.CREATED);
     }
     
+    @PatchMapping("/validateProduct/{productId}")
+    public ResponseEntity<Boolean> validateProduct(@PathVariable int productId)
+    {
+        return new ResponseEntity<Boolean>(productService.validateUnvalidateProduct(productId, true), HttpStatus.OK);
+    }
+
+    @PatchMapping("/unvalidateProduct/{productId}")
+    public ResponseEntity<Boolean> unvalidateProduct(@PathVariable int productId)
+    {
+        return new ResponseEntity<Boolean>(productService.validateUnvalidateProduct(productId, false), HttpStatus.OK);
+    }
+
+    @GetMapping("/getProductByCategoryId/{categoryId}")
+    public ResponseEntity<List<ProductResponse>> getProductByCategoryId(@PathVariable int categoryId) 
+    {
+        return new ResponseEntity<List<ProductResponse>>(productService.getProductsByCategoryId(categoryId), HttpStatus.OK);
+    }
+    
+    @GetMapping("/getAvailableProducts")
+    public ResponseEntity<List<ProductResponse>> getAvailableProducts() {
+        return new ResponseEntity<List<ProductResponse>>(productService.getAvailableProducts(), HttpStatus.OK);
+    }
     
 }
