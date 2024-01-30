@@ -90,6 +90,7 @@ public class OrderService {
         OrderPayment orderPayment = new OrderPayment();
         orderPayment.setOrderCustom(order);
         orderPayment.setOrderPaymentInitiated(new Timestamp(System.currentTimeMillis()));
+        orderPayment.setBuyer(buyer);
         orderPaymentRepository.save(orderPayment);
         order.setOrderPayment(orderPayment);
         orderRepository.save(order);
@@ -102,7 +103,7 @@ public class OrderService {
             if(orderItem.getProduct()==null) throw new RuntimeException("No product has been passed to the order item");
             Product product = session.get(Product.class, orderItem.getProduct().getId());
             if(product==null) throw new RuntimeException("product with this id "+ orderItem.getProduct().getId()+ " is not available");
-            if(!product.isAvailable()) throw new RuntimeException("product "+product.getName() + "id "+ product.getId()+" is not available");
+            if(!product.isAvailable()) throw new RuntimeException("product "+product.getName() + " id "+ product.getId()+" is not available");
             if(product.getQuantity()<orderItem.getQuantity()) throw new RuntimeException("product "+product.getName()+" does not exist in the quantity needed");
             product.setQuantity(product.getQuantity()-orderItem.getQuantity());
             productRepository.save(product);

@@ -16,10 +16,18 @@ public interface OrderPaymentRepository extends CrudRepository<OrderPayment, Int
 
     public List<OrderPayment> getOrderPaymentByModeOfPayment(ModeOfPayment modeOfPayment);
 
+    public List<OrderPayment> getOrderPaymentByBuyerId(int buyerId);
+   
     @Query("Select o from OrderPayment as o where o.completed = true")
     public List<OrderPayment> getOrderPaymentCompleted();
 
     
     @Query("Select o from OrderPayment as o where o.completed = false")
     public List<OrderPayment> getOrderPaymentIncomplete();
+
+    @Query("Select o from OrderPayment as o where o.completed = true and o.buyer.id = :buyerId")
+    public List<OrderPayment> getOrderPaymentsCompletedByBuyerId(int buyerId);
+    
+    @Query("Select o from OrderPayment as o where o.completed = false and o.buyer.id = :buyerId")
+    public List<OrderPayment> getOrderPaymentsIncompletedByBuyerId(int buyerId);
 } 

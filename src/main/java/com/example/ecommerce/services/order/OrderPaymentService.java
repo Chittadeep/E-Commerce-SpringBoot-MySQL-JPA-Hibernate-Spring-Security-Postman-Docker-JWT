@@ -11,6 +11,7 @@ import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderItem;
 import com.example.ecommerce.entities.order.OrderPayment;
 import com.example.ecommerce.entities.seller.SellerPayment;
+import com.example.ecommerce.models.order.OrderPaymentResponse.OrderPaymentResponse;
 import com.example.ecommerce.repositories.order.OrderPaymentRepository;
 import com.example.ecommerce.repositories.seller.SellerPaymentRepository;
 
@@ -21,14 +22,15 @@ public class OrderPaymentService {
     @Autowired
     private SellerPaymentRepository sellerPaymentRepository;
 
-    public OrderPayment getOrderPaymentById(int orderPaymentId)
+
+    public OrderPaymentResponse getOrderPaymentResponseById(int orderPaymentId)
     {
-        return orderPaymentRepository.findById(orderPaymentId).orElseThrow(()->new RuntimeException("No order payment with this id exists"));
+        return new OrderPaymentResponse(getOrderPaymentById(orderPaymentId));
     }
 
-    public OrderPayment createOrderPayment(OrderPayment orderPayment)
+    private OrderPayment getOrderPaymentById(int orderPaymentId)
     {
-        return orderPaymentRepository.save(orderPayment);
+        return orderPaymentRepository.findById(orderPaymentId).orElseThrow(()->new RuntimeException("No order payment with this id exists"));
     }
 
     public OrderPayment completeOrderPayment(int orderPaymentId, ModeOfPayment modeOfPayment)
@@ -56,20 +58,34 @@ public class OrderPaymentService {
         return orderPaymentRepository.save(orderPayment);
     }
 
-    public List<OrderPayment> getAllOrderPayments()
+    public List<OrderPaymentResponse> getAllOrderPayments()
     {
-        return (List<OrderPayment>) orderPaymentRepository.findAll();
+        return ((List<OrderPayment>) orderPaymentRepository.findAll()).stream().map(OrderPaymentResponse::new).toList();
     }
 
-    public List<OrderPayment> getCompletedOrderPayments()
+    public List<OrderPaymentResponse> getCompletedOrderPayments()
     {
-        return orderPaymentRepository.getOrderPaymentCompleted();
+        return orderPaymentRepository.getOrderPaymentCompleted().stream().map(OrderPaymentResponse::new).toList();
     }
    
     
-    public List<OrderPayment> getIncompleteOrderPayments()
+    public List<OrderPaymentResponse> getIncompleteOrderPayments()
     {
-        return orderPaymentRepository.getOrderPaymentIncomplete();
+        return orderPaymentRepository.getOrderPaymentIncomplete().stream().map(OrderPaymentResponse::new).toList();
     }
-    
+
+    public List<OrderPaymentResponse> getOrderPaymentByBuyerId(int buyerId)
+    {
+        return orderPaymentRepository.getOrderPaymentByBuyerId(buyerId).stream().map(OrderPaymentResponse::new).toList();
+    }
+
+    public List<OrderPaymentResponse> getOrderPaymentsCompletedByBuyerId(int buyerId)
+    {
+        return orderPaymentRepository.getOrderPaymentsCompletedByBuyerId(buyerId).stream().map(OrderPaymentResponse::new).toList();
+    }
+
+    public List<OrderPaymentResponse> getOrderPaymentsIncompletedByBuyerId(int buyerId)
+    {
+        return orderPaymentRepository.getOrderPaymentsIncompletedByBuyerId(buyerId).stream().map(OrderPaymentResponse::new).toList();
+    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.ecommerce.entities.enums.OrderState;
 import com.example.ecommerce.entities.order.OrderCustom;
 import com.example.ecommerce.entities.order.OrderPayment;
+import com.example.ecommerce.models.order.OrderPaymentResponse.OrderPaymentResponse;
 
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class OrderResponse {
     private Timestamp orderInitiatedTimestamp;
     private Timestamp orderPlacedTimestamp;
     private OrderState orderState;
-    private OrderPayment orderPayment;
+    private OrderPaymentResponse orderPayment;
 
     public OrderResponse(OrderCustom orderCustom)
     {
@@ -36,6 +37,6 @@ public class OrderResponse {
         this.saasFee = orderCustom.getSaasFee();
         this.totalPrice = orderCustom.getTotalPrice();
         this.orderState = orderCustom.getOrderState();
-        this.orderPayment = orderCustom.getOrderPayment();
+        this.orderPayment = new OrderPaymentResponse(orderCustom.getOrderPayment());
     }
 }

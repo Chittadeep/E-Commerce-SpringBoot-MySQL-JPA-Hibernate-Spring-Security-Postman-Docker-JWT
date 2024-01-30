@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 import com.example.ecommerce.entities.product.ProductReview;
+import com.example.ecommerce.repositories.buyer.BuyerRepository;
+import com.example.ecommerce.repositories.order.OrderItemRepository;
 import com.example.ecommerce.repositories.product.ProductRepository;
 import com.example.ecommerce.repositories.product.ProductReviewRepository;
 
@@ -14,6 +16,12 @@ import com.example.ecommerce.repositories.product.ProductReviewRepository;
 public class ProductReviewService {
     @Autowired
     private ProductReviewRepository productReviewRepository;
+    @Autowired
+    private BuyerRepository buyerRepository;
+    @Autowired
+    private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     public List<ProductReview> getAllProductReview()
     {

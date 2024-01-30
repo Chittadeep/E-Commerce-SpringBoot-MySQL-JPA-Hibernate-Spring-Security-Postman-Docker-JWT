@@ -35,7 +35,7 @@ public class ProductReview {
     @OneToOne
     private OrderItem orderItem;
 
-    @NotNull(message = "Producy review cannot be given without the product")
+    @NotNull(message = "Product review cannot be given without the product")
     @ManyToOne
     private Product product;
 
