@@ -7,6 +7,7 @@ import com.example.ecommerce.entities.seller.SellerPayment;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
@@ -28,4 +29,10 @@ public interface SellerPaymentRepository extends CrudRepository<SellerPayment, I
     public List<SellerPayment> getSellerPaymentByOrderId(int orderId);
 
     public List<SellerPayment> getSellerPaymentByTotalPrice(double totalPrice);
+
+    @Query("Select sp from SellerPayment as sp where sp.collected = true")
+    public List<SellerPayment> getCollectedSellerPayments();
+
+    @Query("Select sp from SellerPayment as sp where sp.collected = false")
+    public List<SellerPayment> getUncollectedSellerPayments();
 }
