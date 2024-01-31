@@ -67,8 +67,8 @@ public class OrderService {
         Session session = entityManager.unwrap(Session.class);
         Buyer buyer = session.get(Buyer.class, order.getBuyer().getId());
         BuyerAddress buyerAddress = session.get(BuyerAddress.class, order.getBuyerAddress().getId());
-        System.out.println(buyer.getName());
-        System.out.println(buyerAddress.getPincode());
+        if(buyer==null) throw new RuntimeException("No buyer exists with this id");
+        if(buyerAddress==null) throw new RuntimeException("No buyer address exists with this id");
         if(buyerAddress.getBuyerId()!=buyer.getId()) throw new RuntimeException("buyer does not have this address");
         List<OrderItem> items = updatePriceAndQuantity(order.getOrderItems(), session);
         items.stream().forEach((item)->{

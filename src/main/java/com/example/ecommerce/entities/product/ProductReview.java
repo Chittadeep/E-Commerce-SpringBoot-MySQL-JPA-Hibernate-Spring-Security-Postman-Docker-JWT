@@ -1,7 +1,6 @@
 package com.example.ecommerce.entities.product;
 
 import com.example.ecommerce.entities.buyer.Buyer;
-import com.example.ecommerce.entities.order.OrderCustom;
 import com.example.ecommerce.entities.order.OrderItem;
 
 import jakarta.persistence.Entity;

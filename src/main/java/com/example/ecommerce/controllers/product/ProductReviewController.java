@@ -2,18 +2,16 @@ package com.example.ecommerce.controllers.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import com.example.ecommerce.entities.product.ProductReview;
+import com.example.ecommerce.models.product.ProductReviewResponse;
 import com.example.ecommerce.services.product.ProductReviewService;
-import com.fasterxml.jackson.databind.ser.std.StdArraySerializers.BooleanArraySerializer;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,52 +23,52 @@ public class ProductReviewController {
     private ProductReviewService productReviewService;
 
     @GetMapping("/allProductReviews")
-    public ResponseEntity<List<ProductReview>> getAllProductReviews() 
+    public ResponseEntity<List<ProductReviewResponse>> getAllProductReviews() 
     {
-        return new ResponseEntity<List<ProductReview>>(productReviewService.getAllProductReview(), HttpStatus.OK);
+        return new ResponseEntity<List<ProductReviewResponse>>(productReviewService.getAllProductReview(), HttpStatus.OK);
     }
 
     @PostMapping("/createProductReview")
-    public ResponseEntity<ProductReview> createProductReview(@RequestBody ProductReview productReview) {
-        return new ResponseEntity<ProductReview>(productReviewService.createProductReview(productReview), HttpStatus.CREATED);
+    public ResponseEntity<ProductReviewResponse> createProductReview(@RequestBody ProductReview productReview) {
+        return new ResponseEntity<ProductReviewResponse>(productReviewService.createProductReview(productReview), HttpStatus.CREATED);
     }
     
     @PutMapping("/updateProductReview")
-    public ResponseEntity<ProductReview> updateProductReview(@RequestBody ProductReview productReview) {
-        return new ResponseEntity<ProductReview>(productReviewService.updateProductReview(productReview), HttpStatus.OK);
+    public ResponseEntity<ProductReviewResponse> updateProductReview(@RequestBody ProductReview productReview) {
+        return new ResponseEntity<ProductReviewResponse>(productReviewService.updateProductReview(productReview), HttpStatus.OK);
     }
     
-    @DeleteMapping("/deletProductReview/{productReviewId}")
+    @DeleteMapping("/deleteProductReview/{productReviewId}")
     public ResponseEntity<Boolean> deleteProductReview(@PathVariable int productReviewId)
     {
         return new ResponseEntity<Boolean>(productReviewService.deleteProductReview(productReviewId), HttpStatus.OK);
     } 
 
     @GetMapping("/getProductReviewById/{productReviewId}")
-    public ResponseEntity<ProductReview> getProductReviewById(@PathVariable int productReviewId) {
-        return new ResponseEntity<ProductReview>(productReviewService.getProductReviewById(productReviewId), HttpStatus.OK);
+    public ResponseEntity<ProductReviewResponse> getProductReviewById(@PathVariable int productReviewId) {
+        return new ResponseEntity<ProductReviewResponse>(productReviewService.getProductReviewResponseById(productReviewId), HttpStatus.OK);
     }
     
     @GetMapping("/getProductReviewByStars/{stars}")
-    public ResponseEntity<List<ProductReview>> getProductReviewByStars(@PathVariable int stars) {
-        return new ResponseEntity<List<ProductReview>>(productReviewService.getProductReviewByStars(stars), HttpStatus.OK);
+    public ResponseEntity<List<ProductReviewResponse>> getProductReviewByStars(@PathVariable int stars) {
+        return new ResponseEntity<List<ProductReviewResponse>>(productReviewService.getProductReviewByStars(stars), HttpStatus.OK);
     }
 
     @GetMapping("/getProductReviewByBuyerId/{buyerId}")
-    public ResponseEntity<List<ProductReview>> getProductReviewByBuyerId(@PathVariable int buyerId) {
-        return new ResponseEntity<List<ProductReview>>(productReviewService.getProductReviewByBuyerId(buyerId), HttpStatus.OK);
+    public ResponseEntity<List<ProductReviewResponse>> getProductReviewByBuyerId(@PathVariable int buyerId) {
+        return new ResponseEntity<List<ProductReviewResponse>>(productReviewService.getProductReviewByBuyerId(buyerId), HttpStatus.OK);
     }
 
-    @GetMapping("/getProductReviewByOrderId/{orderId}")
-    public ResponseEntity<List<ProductReview>> getProductReviewByOrderId(@PathVariable int orderId) 
+    @GetMapping("/getProductReviewByOrderItemId/{orderItemId}")
+    public ResponseEntity<List<ProductReviewResponse>> getProductReviewByOrderItemId(@PathVariable int orderItemId) 
     {
-        return new ResponseEntity<List<ProductReview>>(productReviewService.getProductReviewByOrderId(orderId), HttpStatus.OK);
+        return new ResponseEntity<List<ProductReviewResponse>>(productReviewService.getProductReviewByOrderItemId(orderItemId), HttpStatus.OK);
     }
     
     @GetMapping("/getProductReviewByProductId/{productId}")
-    public ResponseEntity<List<ProductReview>> getProductReviewByProductId(int productId) 
+    public ResponseEntity<List<ProductReviewResponse>> getProductReviewByProductId(int productId) 
     {
-        return new ResponseEntity<List<ProductReview>>(productReviewService.getProductReviewByProductId(productId), HttpStatus.OK);
+        return new ResponseEntity<List<ProductReviewResponse>>(productReviewService.getProductReviewByProductId(productId), HttpStatus.OK);
     }
     
 }
